@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 from typing import List, Optional, Dict, Any
 from datetime import datetime
 
@@ -18,15 +18,14 @@ class UserProfileBase(BaseModel):
     study_style: str = "Deep Work" # Pomodoro, Deep Work, Revision Cycles
     chronotype: str = "Night learner" # Morning learner, Night learner
     target_skills: List[str] = ["DSA", "Agentic AI", "Full Stack Web Development"]
-    career_goals: List[str] = ["Tier-1 AI Tech Placement", "Open Source AI Architect"]
+    career_goals: List[str] = ["Tier-1 AI Tech Placement", "Autonomous Agent Systems Architect"]
     fitness_goals: str = "Daily 45 min Gym & Cardio at 18:30"
     max_study_hours: float = 6.0
 
 class UserProfileResponse(UserProfileBase):
     id: int
     created_at: Optional[datetime] = None
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class SubjectBase(BaseModel):
     code: str
@@ -47,8 +46,7 @@ class SubjectBase(BaseModel):
 
 class SubjectResponse(SubjectBase):
     id: int
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class TimetableSlotBase(BaseModel):
     day_of_week: str
@@ -63,8 +61,7 @@ class TimetableSlotBase(BaseModel):
 
 class TimetableSlotResponse(TimetableSlotBase):
     id: int
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class AttendanceDetail(BaseModel):
     subject_code: str
@@ -88,7 +85,7 @@ class AttendanceSummaryResponse(BaseModel):
 
 class BunkSimulationRequest(BaseModel):
     subject_code: str
-    skips_planned: int
+    skips_planned: int = Field(ge=0, le=20, default=1)
 
 class BunkSimulationResponse(BaseModel):
     subject_code: str
@@ -119,8 +116,7 @@ class AssignmentBase(BaseModel):
 
 class AssignmentResponse(AssignmentBase):
     id: int
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class StudySessionResponse(BaseModel):
     id: int
@@ -133,8 +129,7 @@ class StudySessionResponse(BaseModel):
     session_type: str
     is_completed: bool
     pomodoro_intervals: int
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class RevisionItemResponse(BaseModel):
     id: int
@@ -144,19 +139,18 @@ class RevisionItemResponse(BaseModel):
     interval_type: str
     scheduled_date: str
     status: str
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class SkillMilestone(BaseModel):
     title: str
     description: str
     est_hours: float
-    status: str = "pending" # pending, in_progress, completed
+    status: str = "pending"
 
 class ResourceItem(BaseModel):
     title: str
     url: str
-    platform: str # Official Docs, LeetCode, NeetCode, MIT OCW, NPTEL, YouTube, FreeCodeCamp
+    platform: str
     is_free: bool = True
 
 class SkillTrackResponse(BaseModel):
@@ -169,8 +163,7 @@ class SkillTrackResponse(BaseModel):
     curated_resources: List[ResourceItem]
     current_milestone_index: int
     progress_percentage: float = 0.0
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class SemesterHandbookSection(BaseModel):
     page_number: int
@@ -190,15 +183,22 @@ class SemesterHandbookResponse(BaseModel):
     sections: List[SemesterHandbookSection]
 
 class ChatMessageRequest(BaseModel):
-    message: str
+    message: str = Field(min_length=1, max_length=1000)
     context_day: Optional[str] = None
     context_time: Optional[str] = None
 
 class ChatMessageResponse(BaseModel):
     reply: str
-    action_type: Optional[str] = None # "TIMETABLE_LOOKUP", "BUNK_CALCULATION", "STUDY_RECOMMENDATION", "GENERAL"
+    action_type: Optional[str] = None
     action_data: Optional[Dict[str, Any]] = None
     quick_suggestions: List[str] = []
+
+class AgentStatusInfo(BaseModel):
+    agent_id: str
+    name: str
+    status: str = "ONLINE"
+    latency_ms: float = 1.2
+    description: str
 
 class MasterSemesterStateResponse(BaseModel):
     user: UserProfileResponse
@@ -213,3 +213,4 @@ class MasterSemesterStateResponse(BaseModel):
     timeline_events: List[Dict[str, Any]]
     campus_points: List[Dict[str, Any]]
     hostel_timings: Dict[str, Any]
+    active_agents: List[AgentStatusInfo] = []

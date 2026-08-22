@@ -1,5 +1,5 @@
 from typing import Dict, Any, List
-from datetime import datetime
+from datetime import datetime, timezone
 from app.services.demo_data import (
     DEMO_USER_PROFILE, DEMO_SUBJECTS, DEMO_TIMETABLE_SLOTS, 
     DEMO_ATTENDANCE, DEMO_ASSIGNMENTS, DEMO_SKILLS, DEMO_TIMELINE_EVENTS
@@ -20,7 +20,7 @@ class HandbookGeneratorAgent:
 
     def generate_full_handbook(self, profile: Dict[str, Any] = None) -> Dict[str, Any]:
         p = profile or DEMO_USER_PROFILE
-        now_str = datetime.utcnow().strftime("%B %d, %Y")
+        now_str = datetime.now(timezone.utc).strftime("%B %d, %Y")
         att_summary = attendance_agent.get_full_summary()
 
         sections = [

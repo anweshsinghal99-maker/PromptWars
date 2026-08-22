@@ -1,5 +1,5 @@
 from typing import Dict, Any, List
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from app.services.demo_data import DEMO_ASSIGNMENTS
 
 class AssignmentAgent:
@@ -32,6 +32,7 @@ class AssignmentAgent:
             ("Day 4: Final Documentation & Submission Prep", "Format document, compile source code/charts, review plagiarism and submit.")
         ]
 
+        now_ts = int(datetime.now(timezone.utc).timestamp())
         for i in range(days_available):
             day_num = i + 1
             if i < len(subtask_templates):
@@ -41,7 +42,7 @@ class AssignmentAgent:
                 t_desc = f"Continue detailed progress and review of {title}."
 
             subtasks.append({
-                "id": f"sub-{day_num}-{int(datetime.utcnow().timestamp())}",
+                "id": f"sub-{day_num}-{now_ts}",
                 "day": f"Day {day_num}",
                 "title": f"{t_name} - {t_desc}",
                 "estimated_mins": daily_mins,
@@ -52,7 +53,7 @@ class AssignmentAgent:
 
     def get_all_assignments(self) -> List[Dict[str, Any]]:
         assignments = []
-        now = datetime.utcnow()
+        now = datetime.now(timezone.utc)
         for a in DEMO_ASSIGNMENTS:
             deadline = now + timedelta(days=a.get("days_from_now", 3))
             assignments.append({
