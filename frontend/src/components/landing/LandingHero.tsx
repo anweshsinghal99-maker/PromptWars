@@ -1,6 +1,7 @@
 import React from 'react';
-import { Sparkles, Calendar, ShieldCheck, Brain, ArrowRight, Zap, CheckCircle2, Award, Clock, FileText } from 'lucide-react';
+import { Sparkles, Calendar, ShieldCheck, Brain, ArrowRight, Zap } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import { Button } from '../ui/Button';
 
 interface LandingHeroProps {
   onStartPlanning: () => void;
@@ -13,112 +14,116 @@ export const LandingHero: React.FC<LandingHeroProps> = ({ onStartPlanning, onTry
       particleCount: 80,
       spread: 70,
       origin: { y: 0.6 },
-      colors: ['#6366f1', '#06b6d4', '#10b981', '#a855f7']
+      colors: ['#0ea5e9', '#38bdf8', '#7dd3fc', '#10b981', '#fcd34d']
     });
     onTryDemo();
   };
 
   return (
     <div className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 py-20 overflow-hidden">
-      {/* Ambient Lighting */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-indigo-600/15 blur-[140px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-1/3 left-1/4 w-[500px] h-[350px] bg-cyan-500/10 blur-[120px] rounded-full pointer-events-none" />
 
-      {/* Top Floating Badge */}
-      <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full glass-panel border border-indigo-500/40 text-indigo-300 text-xs font-semibold mb-8 shadow-glow-primary animate-pulse-subtle">
-        <Sparkles className="w-4 h-4 text-cyan-400" />
-        <span>Autonomous Academic Operating System • Powered by 10 AI Agents</span>
+      {/* Two-point hero glow — violet + soft pink offset — vibrant but restrained */}
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] rounded-full pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse at 40% 50%, rgba(14,165,233,0.15) 0%, rgba(16,185,129,0.06) 60%, transparent 80%)' }}
+      />
+
+      {/* ── Badge ── */}
+      <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/[0.09] bg-white/[0.04] text-slate-400 text-xs font-medium mb-8 select-none">
+        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+        Autonomous Academic OS · Powered by 10 AI Agents
       </div>
 
-      {/* Hero Headline */}
+      {/* ── Hero Headline ── */}
       <div className="text-center max-w-4xl mx-auto space-y-6">
-        <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white leading-[1.1]">
-          Orchestrate Your Semester <br />
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-cyan-300 to-emerald-400">
+        <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-slate-100 leading-[1.08]">
+          Orchestrate Your Semester
+          <br />
+          <span className="bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(135deg, #0284c7 0%, #0ea5e9 45%, #10b981 100%)' }}>
             With Zero Friction
           </span>
         </h1>
-        <p className="text-base sm:text-xl text-slate-300 max-w-2xl mx-auto font-light leading-relaxed">
-          From syllabus PDFs to synchronized execution: automated Google Calendar timetable, 
-          75% safe bunk protection, spaced repetition review, and career skill roadmaps.
+
+        <p className="text-base sm:text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed font-light">
+          From syllabus PDFs to synchronized execution — automated timetable,
+          75% attendance sentinel, spaced repetition, and career skill roadmaps.
         </p>
 
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6">
-          <button
+        {/* ── CTA Buttons ── */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4">
+          <Button
+            variant="primary"
+            size="lg"
             onClick={triggerDemoWithConfetti}
-            className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white font-bold text-base shadow-glow-primary flex items-center justify-center gap-3 transition-all duration-200 hover:scale-[1.03]"
+            leftIcon={<Sparkles className="w-4 h-4" aria-hidden="true" />}
+            rightIcon={<ArrowRight className="w-4 h-4" aria-hidden="true" />}
+            className="w-full sm:w-auto"
           >
-            <Sparkles className="w-5 h-5 text-cyan-200" />
-            <span>Try Demo (1-Click Instant Preview)</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
+            Try Demo — Instant Preview
+          </Button>
 
-          <button
+          <Button
+            variant="secondary"
+            size="lg"
             onClick={onStartPlanning}
-            className="w-full sm:w-auto px-8 py-4 rounded-2xl glass-panel hover:bg-slate-800/90 text-slate-200 font-semibold text-base border border-slate-700 flex items-center justify-center gap-2.5 transition-all duration-200"
+            leftIcon={<Zap className="w-4 h-4 text-amber-400" aria-hidden="true" />}
+            className="w-full sm:w-auto"
           >
-            <Zap className="w-4 h-4 text-amber-400" />
-            <span>Guided Setup</span>
-          </button>
+            Guided Setup
+          </Button>
         </div>
 
-        {/* Live Metrics Showcase */}
-        <div className="pt-10 grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl mx-auto text-left">
-          <div className="p-4 rounded-2xl glass-panel border border-slate-800 space-y-1">
-            <span className="text-[11px] font-bold text-indigo-400 uppercase tracking-wider">Curriculum</span>
-            <p className="text-xl font-extrabold text-white">20.0 Credits</p>
-            <p className="text-[11px] text-slate-400">Thapar B.E. (DS & AI)</p>
-          </div>
-          <div className="p-4 rounded-2xl glass-panel border border-slate-800 space-y-1">
-            <span className="text-[11px] font-bold text-emerald-400 uppercase tracking-wider">Attendance Guard</span>
-            <p className="text-xl font-extrabold text-emerald-400">75% Sentinel</p>
-            <p className="text-[11px] text-slate-400">Predictive Bunk Calc</p>
-          </div>
-          <div className="p-4 rounded-2xl glass-panel border border-slate-800 space-y-1">
-            <span className="text-[11px] font-bold text-cyan-400 uppercase tracking-wider">Timetable</span>
-            <p className="text-xl font-extrabold text-cyan-300">31 Slots / Wk</p>
-            <p className="text-[11px] text-slate-400">Room & Lab Mapped</p>
-          </div>
-          <div className="p-4 rounded-2xl glass-panel border border-slate-800 space-y-1">
-            <span className="text-[11px] font-bold text-purple-400 uppercase tracking-wider">Spaced Revision</span>
-            <p className="text-xl font-extrabold text-purple-300">1 / 3 / 7 / 14</p>
-            <p className="text-[11px] text-slate-400">Ebbinghaus Cycles</p>
-          </div>
+        {/* ── Metric Stats Row ── */}
+        <div className="pt-10 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-3xl mx-auto text-left">
+          {[
+            { label: 'Curriculum',      value: '20.0 Credits',    sub: 'Thapar B.E. (DS & AI)',       color: 'text-slate-100' },
+            { label: 'Attendance Guard', value: '75% Sentinel',   sub: 'Predictive Bunk Calc',         color: 'text-emerald-400' },
+            { label: 'Timetable',        value: '31 Slots / Wk',  sub: 'Room & Lab Mapped',            color: 'text-slate-100' },
+            { label: 'Spaced Revision',  value: '1/3/7/14 Days',  sub: 'Ebbinghaus Cycles',            color: 'text-accent' },
+          ].map(stat => (
+            <div
+              key={stat.label}
+              className="p-4 rounded-xl bg-elevated border border-white/[0.07] space-y-1"
+            >
+              <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest">{stat.label}</span>
+              <p className={`text-lg font-bold ${stat.color}`}>{stat.value}</p>
+              <p className="text-[11px] text-slate-500">{stat.sub}</p>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* Visual Feature Cards */}
-      <div className="mt-16 max-w-5xl w-full grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="glass-card p-6 rounded-3xl space-y-3 border border-indigo-500/20">
-          <div className="w-12 h-12 rounded-2xl bg-indigo-600/20 text-indigo-400 flex items-center justify-center shadow-glow-primary">
-            <Calendar className="w-6 h-6" />
+      {/* ── Feature Cards ── */}
+      <div className="mt-14 max-w-4xl w-full grid grid-cols-1 md:grid-cols-3 gap-4">
+        {[
+          {
+            icon: <Calendar className="w-5 h-5" />,
+            title: 'Google Calendar Timetable',
+            desc: 'Visual week matrix mapped to lecture halls (T105, LT102) and labs (PL-2, CBTL) with instant .ICS sync.',
+            accent: 'border-accent/20',
+          },
+          {
+            icon: <ShieldCheck className="w-5 h-5" />,
+            title: 'Attendance Sentinel',
+            desc: 'Real-time safe bunk calculations and "what-if" simulations to prevent mandatory attendance detentions.',
+            accent: 'border-emerald-500/20',
+          },
+          {
+            icon: <Brain className="w-5 h-5" />,
+            title: 'Spaced Study Planner',
+            desc: 'Credit-weighted Deep Work sessions and forgetting curve retention queues calibrated for your chronotype.',
+            accent: 'border-amber-500/20',
+          },
+        ].map(card => (
+          <div
+            key={card.title}
+            className={`p-5 rounded-xl bg-elevated border ${card.accent} border-l-2 space-y-3 hover:bg-overlay transition-colors duration-200`}
+          >
+            <div className="text-accent">{card.icon}</div>
+            <h3 className="text-sm font-semibold text-slate-100">{card.title}</h3>
+            <p className="text-xs text-slate-500 leading-relaxed">{card.desc}</p>
           </div>
-          <h3 className="text-base font-bold text-white">Google Calendar Timetable</h3>
-          <p className="text-xs text-slate-300 leading-relaxed">
-            Visual week matrix mapped to lecture halls (T105, LT102) and labs (PL-2, CBTL) with instant .ICS sync.
-          </p>
-        </div>
-
-        <div className="glass-card p-6 rounded-3xl space-y-3 border border-cyan-500/20">
-          <div className="w-12 h-12 rounded-2xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center shadow-glow-cyan">
-            <ShieldCheck className="w-6 h-6" />
-          </div>
-          <h3 className="text-base font-bold text-white">Attendance Sentinel</h3>
-          <p className="text-xs text-slate-300 leading-relaxed">
-            Real-time safe bunk calculations and "what-if" simulations to prevent mandatory attendance detentions.
-          </p>
-        </div>
-
-        <div className="glass-card p-6 rounded-3xl space-y-3 border border-emerald-500/20">
-          <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shadow-glow-emerald">
-            <Brain className="w-6 h-6" />
-          </div>
-          <h3 className="text-base font-bold text-white">Spaced Study Planner</h3>
-          <p className="text-xs text-slate-300 leading-relaxed">
-            Credit-weighted Deep Work sessions and forgetting curve retention queues calibrated for your chronotype.
-          </p>
-        </div>
+        ))}
       </div>
     </div>
   );

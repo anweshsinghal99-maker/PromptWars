@@ -2,80 +2,123 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ================================================================
+   BRIGHT LIGHT THEME — Design Tokens
+   Vibrant, clean light mode with beautiful sky blue accents.
+   ================================================================ */
 :root {
-  color-scheme: dark;
+  color-scheme: light;
+
+  /* — Surfaces (Bright Mode) — */
+  --color-base:     #F8FAFC;  /* Bright soft gray background */
+  --color-surface:  #FFFFFF;  /* Pure white cards */
+  --color-elevated: #FFFFFF;
+  --color-overlay:  #F1F5F9;  /* Soft hover gray */
+
+  /* — Borders (Subtle gray) — */
+  --border-subtle:  rgba(0, 0, 0, 0.06);
+  --border-default: rgba(0, 0, 0, 0.1);
+  --border-strong:  rgba(0, 0, 0, 0.15);
+
+  /* — Accent (Vibrant Sky Blue) — */
+  --accent:        #0ea5e9;
+  --accent-hover:  #0284c7;
+  --accent-muted:  rgba(14, 165, 233, 0.12);
+  --accent-border: rgba(14, 165, 233, 0.22);
+  --accent-strong: rgba(14, 165, 233, 0.32);
+
+  /* — Text (Dark Charcoal) — */
+  --text-primary:   #1e293b;
+  --text-secondary: #334155;
+  --text-muted:     #64748b;
+
+  /* — Semantic — */
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-danger:  #ef4444;
+  --color-info:    #3b82f6;
+
+  /* — Shadows — */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
 }
 
+/* ================================================================
+   BASE
+   ================================================================ */
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background-color: #070a12;
-  background-image: 
-    radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.12) 0px, transparent 40%),
-    radial-gradient(circle at 85% 20%, rgba(6, 182, 212, 0.12) 0px, transparent 45%),
-    radial-gradient(circle at 50% 85%, rgba(168, 85, 247, 0.08) 0px, transparent 50%);
-  background-attachment: fixed;
-  letter-spacing: -0.01em;
+  background-color: var(--color-base);
+  color: var(--text-primary);
+  letter-spacing: -0.011em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Enhanced Glassmorphism & Airy Visual Design */
+/* ================================================================
+   GLASSMORPHISM — clean light frosted glass
+   ================================================================ */
+.glass-header {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px) saturate(1.4);
+  -webkit-backdrop-filter: blur(12px) saturate(1.4);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
 .glass-panel {
-  background: rgba(15, 23, 42, 0.6);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-subtle);
 }
 
-.glass-panel-glow {
-  background: rgba(15, 23, 42, 0.7);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(99, 102, 241, 0.25);
-  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45), 0 0 30px -5px rgba(99, 102, 241, 0.2);
+.glass-panel-glow { background: var(--color-surface); box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+.glass-card       { background: var(--color-elevated); border: 1px solid var(--border-subtle); transition: all 0.2s ease; }
+.glass-card:hover { border-color: var(--border-strong); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+
+/* ================================================================
+   SCROLLBAR — subtle gray
+   ================================================================ */
+::-webkit-scrollbar        { width: 5px; height: 5px; }
+::-webkit-scrollbar-track  { background: transparent; }
+::-webkit-scrollbar-thumb  { background: rgba(0,0,0,0.15); border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.25); }
+
+/* ================================================================
+   FOCUS RING
+   ================================================================ */
+*:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 6px;
 }
 
-.glass-card {
-  background: rgba(30, 41, 59, 0.35);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+/* ================================================================
+   SELECTION
+   ================================================================ */
+::selection {
+  background: rgba(14, 165, 233, 0.25);
+  color: #0f172a;
 }
 
-.glass-card:hover {
-  background: rgba(30, 41, 59, 0.6);
-  border-color: rgba(99, 102, 241, 0.35);
-  transform: translateY(-3px);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 0 15px -3px rgba(99, 102, 241, 0.15);
+/* ================================================================
+   REDUCED MOTION
+   ================================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration:        0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration:       0.01ms !important;
+    scroll-behavior:           auto !important;
+  }
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.6);
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(99, 102, 241, 0.3);
-  border-radius: 9999px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(99, 102, 241, 0.6);
-}
-
-/* Print Styles */
+/* ================================================================
+   PRINT
+   ================================================================ */
 @media print {
-  body {
-    background: #ffffff !important;
-    color: #000000 !important;
-  }
-  .no-print {
-    display: none !important;
-  }
-  .print-page-break {
-    page-break-after: always;
-  }
+  body { background: #ffffff !important; color: #000000 !important; }
+  .no-print         { display: none !important; }
+  .print-page-break { page-break-after: always; }
 }

@@ -76,23 +76,54 @@ export const api = {
     } catch (e) {
       console.warn("Chat local fallback");
     }
-    // Deterministic fallback response
+    // ── Comprehensive deterministic fallback (backend offline) ──
     const q = message.toLowerCase();
-    if (q.includes("where") || q.includes("class")) {
+
+    if (q.includes('where') || (q.includes('class') && q.includes('room'))) {
       return {
-        reply: "📍 **Class Venues Today:**\n• `08:50 - 09:40`: EEE in **T105** (Block A)\n• `09:40 - 10:30`: Calculus in **T105**\n• `11:20 - 13:00`: PPS Lab in **PL-2 (Computer Center)**\n• `17:10 & 18:00`: Evening Lectures in **LT102**",
-        quick_suggestions: ["Can I skip tomorrow?", "What should I study tonight?", "Show full schedule"]
+        reply: "📍 **Today's Class Locations:**\n\n• **08:50–09:40** — Electrical (L) → **T105**, Block A\n• **09:40–10:30** — Calculus (L) → **T105**\n• **11:20–13:00** — PPS C Lab (P) → **PL-2** (Computer Center)\n• **17:10–18:00** — DS & AI (L) → **LT102**\n• **18:00–18:50** — Chemistry (L) → **LT102**",
+        quick_suggestions: ["Can I bunk Chemistry?", "Attendance summary", "What to study tonight?"]
       };
     }
-    if (q.includes("skip") || q.includes("bunk")) {
+
+    if (q.includes('schedule') || q.includes('today') || q.includes('timetable') || q.includes('full')) {
       return {
-        reply: "📊 **Attendance Status:**\n• Overall: **86.8%** (Target: 75%)\n• 🚨 **UES013 (Electrical): 72.7%** — Must attend next 2 lectures to recover!\n• ✅ **Chemistry (95.0%)**: 5 safe bunks remaining.",
-        quick_suggestions: ["Simulate skipping 1 lecture", "When is next exam?", "Where is my class?"]
+        reply: "📆 **Today — Friday Schedule:**\n\n| Time | Subject | Room |\n|------|---------|------|\n| 08:50–09:40 | Electrical (L) | T105 |\n| 09:40–10:30 | Calculus (L) | T105 |\n| 11:20–13:00 | PPS C Lab (P) | PL-2 |\n| 17:10–18:00 | DS & AI (L) | LT102 |\n| 18:00–18:50 | Chemistry (L) | LT102 |\n\n_5 contact hours · Hostel curfew: 8:30 PM_",
+        quick_suggestions: ["Where is PL-2?", "Can I skip evening?", "What to study tonight?"]
       };
     }
+
+    if (q.includes('bunk') || q.includes('skip') || q.includes('miss') || q.includes('attendance') || q.includes('percent')) {
+      return {
+        reply: "📊 **Attendance Status:**\n\n✅ **Overall: 86.8%** — 11.8% above danger line\n\n⚠️ **UES013 Electrical — 72.7%** ← At Risk!\n   Must attend next **2 consecutive** lectures.\n\n🟢 **Safe Bunks Remaining:**\n• PPS C Lab: 3 skips\n• Chemistry: 5 skips  \n• Calculus: 4 skips\n• DS & AI: 6 skips",
+        quick_suggestions: ["Simulate skipping 2 classes", "Where is Electrical class?", "Next exam countdown"]
+      };
+    }
+
+    if (q.includes('exam') || q.includes('test') || q.includes('mst') || q.includes('est') || q.includes('countdown')) {
+      return {
+        reply: "📅 **Upcoming Exam Schedule:**\n\n🔴 **MST Round 1** — October 4–7, 2026\n   _≈ 15 days away · Weightage: 30%_\n\n📋 **Study Priority:**\n1. UES013 Electrical ← Most risky attendance too\n2. UCB009 Chemistry\n3. UMA022 Calculus\n4. UES103 PPS (C Programming)\n\n_Start deep revision **today**._",
+        quick_suggestions: ["Study plan for MST", "Attendance before MST?", "Where is the exam hall?"]
+      };
+    }
+
+    if (q.includes('study') || q.includes('tonight') || q.includes('revision') || q.includes('learn')) {
+      return {
+        reply: "🧠 **Tonight's Study Plan — Night Owl (21:30–01:00):**\n\n• **21:30–23:00** — DSA: Binary Trees & Heaps (NeetCode #153)\n• **23:00–23:15** — Break ☕\n• **23:15–00:30** — Calculus: Integration by Parts (Ch. 7)\n• **00:30–01:00** — Spaced Revision: UES103 Pointers\n\n🎯 _Deep Work mode. Phone on DND._",
+        quick_suggestions: ["Start Pomodoro timer", "Mark session complete", "What's due tomorrow?"]
+      };
+    }
+
+    if (q.includes('skill') || q.includes('dsa') || q.includes('roadmap') || q.includes('career') || q.includes('placement')) {
+      return {
+        reply: "🚀 **Skill Roadmap Progress:**\n\n• **DSA Track** — 42% complete (NeetCode 150)\n• **Agentic AI** — 38% complete (LangGraph + MCP)\n• **Full Stack** — 25% complete (React + FastAPI)\n\n📅 Weekly budget: 1.5 hrs DSA · 1 hr AI · 0.5 hr Web\n_Slots: Weekdays 19:00–20:30 (after labs)_",
+        quick_suggestions: ["Today's DSA problem", "Show AI resources", "Next skill milestone"]
+      };
+    }
+
     return {
-      reply: "🤖 I am your AI Semester Copilot. I have your timetable, attendance, study sessions, and exams fully synchronized.",
-      quick_suggestions: ["Where is my class?", "Today's schedule", "What to study tonight?", "Next exam countdown"]
+      reply: "🤖 **AI Semester Copilot** — demo mode (backend offline).\n\nI can answer questions about:\n📍 Class locations & rooms\n📆 Today's full schedule\n📊 Attendance & safe bunks\n📅 Exam countdowns & priority\n🧠 Study plan & spaced revision\n🚀 Skill roadmaps & career goals\n\nTry one of the suggestions below!",
+      quick_suggestions: ["Where is my class?", "Show today's schedule", "Can I bunk today?", "Next exam countdown"]
     };
   },
 

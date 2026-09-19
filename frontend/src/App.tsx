@@ -35,7 +35,7 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#090d16] text-slate-100 selection:bg-indigo-500 selection:text-white">
+    <div className="min-h-screen bg-base text-slate-100 selection:bg-accent/40 selection:text-[#ffffff] overflow-x-hidden">
       {view === 'landing' && (
         <LandingHero
           onStartPlanning={handleStartPlanning}
