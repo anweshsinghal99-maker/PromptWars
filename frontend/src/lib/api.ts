@@ -143,7 +143,33 @@ export const api = {
       semester: INITIAL_DEMO_STATE.user.semester,
       student_name: INITIAL_DEMO_STATE.user.name,
       generated_at: "August 2026",
-      sections: []
+      sections: [
+        {
+          section_id: 'sec-overview',
+          title: 'Section 1: Academic Overview',
+          subtitle: 'Your Core Subjects & Goals',
+          page_number: 1,
+          content_markdown: 'Welcome to your AI-generated Semester Handbook.\n\nThis semester focuses on core Computer Science fundamentals and Data Science methodologies. The primary goal is to maintain a CGPA > 8.5 while completing 2 major projects.\n\n### Key Focus Areas\n- Data Structures & Algorithms\n- Operating Systems\n- Database Management Systems',
+          tables: [
+            {
+              headers: ['Subject', 'Credits', 'Target Grade'],
+              rows: [
+                ['Data Structures', '4', 'A+'],
+                ['Operating Systems', '4', 'A'],
+                ['DBMS', '4', 'A']
+              ]
+            }
+          ]
+        },
+        {
+          section_id: 'sec-roadmap',
+          title: 'Section 2: Skill Roadmap',
+          subtitle: 'Placement Preparation',
+          page_number: 2,
+          content_markdown: 'Based on your goal of Tier-1 Placements, this section outlines the required technical skills.\n\n### Required Skills\n- Advanced Graph Algorithms\n- System Design Basics\n- React / Node.js Fullstack',
+          callouts: ['Focus on LeetCode Medium/Hard problems daily.', 'Start building your portfolio website this month.']
+        }
+      ]
     };
   }
 };
