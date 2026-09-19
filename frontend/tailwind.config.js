@@ -4,60 +4,49 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-  darkMode: 'class', // Disable auto dark mode
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        // --- LIGHT MODE THEME INVERSION ---
-        // By inverting 'slate', all existing dark mode text classes (like text-slate-100)
-        // automatically become dark charcoal text, creating a perfect light mode 
-        // without rewriting 200+ class names across components!
+        // --- DYNAMIC THEME SUPPORT ---
         slate: {
-          50: '#0f172a',  // Inverted: Was slate-950, now slate-100
-          100: '#1e293b', // Primary Text (was white, now slate-800)
-          200: '#334155', // Secondary Text
-          300: '#475569', 
-          400: '#64748b', // Muted Text
-          500: '#94a3b8',
-          600: '#cbd5e1',
-          700: '#e2e8f0',
-          800: '#f1f5f9',
-          900: '#f8fafc',
-          950: '#ffffff',
+          50:  'var(--slate-50)',
+          100: 'var(--slate-100)',
+          200: 'var(--slate-200)',
+          300: 'var(--slate-300)',
+          400: 'var(--slate-400)',
+          500: 'var(--slate-500)',
+          600: 'var(--slate-600)',
+          700: 'var(--slate-700)',
+          800: 'var(--slate-800)',
+          900: 'var(--slate-900)',
+          950: 'var(--slate-950)',
         },
         
-        // Invert white/black so borders/hovers (bg-white/5) become subtle black overlays (bg-black/5)
-        white: '#000000', 
-        black: '#ffffff',
+        white: 'var(--theme-white)',
+        black: 'var(--theme-black)',
 
-        // ── Bright Aesthetic Theme (Sky Blue / Cyan) ──
-        base:     "#F8FAFC",   // Bright slate-50 background
-        surface:  "#FFFFFF",   // Pure white cards
-        elevated: "#FFFFFF",   // Pure white elevated cards
-        overlay:  "#F1F5F9",   // Hover overlay (slate-100)
+        // Custom Variables
+        base:     "var(--color-base)",
+        surface:  "var(--color-surface)",
+        elevated: "var(--color-elevated)",
+        overlay:  "var(--color-overlay)",
 
-        // Vibrant Sky Blue accent!
-        accent: "#0ea5e9",     // sky-500
-        
-        success: "#10b981",    // emerald-500
-        warning: "#f59e0b",    // amber-500
-        danger:  "#ef4444",    // red-500
-        info:    "#3b82f6",    // blue-500
+        accent:   "var(--accent)",
+        success:  "var(--color-success)",
+        warning:  "var(--color-warning)",
+        danger:   "var(--color-danger)",
+        info:     "var(--color-info)",
       },
       fontFamily: {
         sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
         mono: ['JetBrains Mono', 'Fira Code', 'Consolas', 'monospace'],
       },
       boxShadow: {
-        'elevation-sm': '0 1px 2px rgba(0,0,0,0.05)',
-        'elevation-md': '0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -1px rgba(0,0,0,0.04)',
-        'elevation-lg': '0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.04)',
-        'focus':        '0 0 0 3px rgba(14,165,233,0.3)',
-        // Neutralised glow aliases (backward compat)
-        'glow-primary': '0 4px 16px rgba(0,0,0,0.05)',
-        'glow-cyan':    '0 4px 16px rgba(0,0,0,0.05)',
-        'glow-emerald': '0 4px 16px rgba(0,0,0,0.05)',
-        'glow-rose':    '0 4px 16px rgba(0,0,0,0.05)',
+        'elevation-sm': 'var(--shadow-sm)',
+        'elevation-md': 'var(--shadow-md)',
+        'elevation-lg': 'var(--shadow-lg)',
+        'focus':        '0 0 0 3px var(--accent-muted)',
       },
       animation: {
         'pulse-subtle':   'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',

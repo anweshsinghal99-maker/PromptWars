@@ -1,5 +1,7 @@
 import React from 'react';
 import { Sparkles, Calendar, ShieldCheck, Brain, ArrowRight, Zap } from 'lucide-react';
+import { ThemeToggle } from '../ui/ThemeToggle';
+import { useTheme } from '../../lib/ThemeContext';
 import confetti from 'canvas-confetti';
 import { Button } from '../ui/Button';
 
@@ -9,23 +11,32 @@ interface LandingHeroProps {
 }
 
 export const LandingHero: React.FC<LandingHeroProps> = ({ onStartPlanning, onTryDemo }) => {
-  const triggerDemoWithConfetti = () => {
+  const { isDarkMode } = useTheme();
+
+  const handleDemoClick = () => {
     confetti({
       particleCount: 80,
       spread: 70,
       origin: { y: 0.6 },
-      colors: ['#0ea5e9', '#38bdf8', '#7dd3fc', '#10b981', '#fcd34d']
+      colors: isDarkMode 
+        ? ['#fb7185', '#fca5a5', '#fecdd3', '#2dd4bf', '#fbbf24']
+        : ['#0ea5e9', '#38bdf8', '#7dd3fc', '#10b981', '#fcd34d']
     });
     onTryDemo();
   };
 
   return (
     <div className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 py-20 overflow-hidden">
+      
+      {/* Absolute Header with Theme Toggle */}
+      <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-50">
+        <ThemeToggle />
+      </div>
 
-      {/* Two-point hero glow — violet + soft pink offset — vibrant but restrained */}
+      {/* Two-point hero glow — vibrant but restrained */}
       <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at 40% 50%, rgba(14,165,233,0.15) 0%, rgba(16,185,129,0.06) 60%, transparent 80%)' }}
+        style={{ background: 'radial-gradient(ellipse at 40% 50%, var(--hero-glow-1) 0%, var(--hero-glow-2) 60%, transparent 80%)' }}
       />
 
       {/* ── Badge ── */}
@@ -39,7 +50,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({ onStartPlanning, onTry
         <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-slate-100 leading-[1.08]">
           Orchestrate Your Semester
           <br />
-          <span className="bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(135deg, #0284c7 0%, #0ea5e9 45%, #10b981 100%)' }}>
+          <span className="bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(135deg, var(--text-gradient-1) 0%, var(--text-gradient-2) 45%, var(--text-gradient-3) 100%)' }}>
             With Zero Friction
           </span>
         </h1>
@@ -54,7 +65,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({ onStartPlanning, onTry
           <Button
             variant="primary"
             size="lg"
-            onClick={triggerDemoWithConfetti}
+            onClick={handleDemoClick}
             leftIcon={<Sparkles className="w-4 h-4" aria-hidden="true" />}
             rightIcon={<ArrowRight className="w-4 h-4" aria-hidden="true" />}
             className="w-full sm:w-auto"

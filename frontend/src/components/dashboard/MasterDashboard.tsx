@@ -11,6 +11,7 @@ import { HandbookViewer } from './HandbookViewer';
 import { AICopilotDrawer } from './AICopilotDrawer';
 import { ResourceHub } from './ResourceHub';
 import { Button } from '../ui/Button';
+import { ThemeToggle } from '../ui/ThemeToggle';
 import {
   LayoutDashboard, Calendar, ShieldCheck, CheckSquare,
   Brain, Award, Milestone, BookOpen, Compass, Bot,
@@ -113,17 +114,19 @@ export const MasterDashboard: React.FC<MasterDashboardProps> = ({ initialState, 
             })}
           </nav>
 
-          {/* AI Copilot */}
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={() => setIsCopilotOpen(true)}
-            leftIcon={<Bot className="w-3.5 h-3.5 text-accent" />}
-            aria-label="Open AI Copilot"
-            className="shrink-0 border-rose-400/[0.15] text-slate-300"
-          >
-            <span className="hidden sm:inline">AI Copilot</span>
-          </Button>
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => setIsCopilotOpen(true)}
+              leftIcon={<Bot className="w-3.5 h-3.5 text-accent" />}
+              aria-label="Open AI Copilot"
+              className="shrink-0 border-accent/20 text-slate-600 dark:text-slate-300"
+            >
+              <span className="hidden sm:inline">AI Copilot</span>
+            </Button>
+          </div>
         </div>
       </header>
 

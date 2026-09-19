@@ -3,45 +3,116 @@
 @tailwind utilities;
 
 /* ================================================================
-   BRIGHT LIGHT THEME — Design Tokens
-   Vibrant, clean light mode with beautiful sky blue accents.
+   DYNAMIC THEME TOKENS
+   Light Mode (Sky Blue) vs Dark Mode (Pastel Red)
    ================================================================ */
-:root {
+
+:root { /* LIGHT MODE */
   color-scheme: light;
 
-  /* — Surfaces (Bright Mode) — */
-  --color-base:     #F8FAFC;  /* Bright soft gray background */
-  --color-surface:  #FFFFFF;  /* Pure white cards */
-  --color-elevated: #FFFFFF;
-  --color-overlay:  #F1F5F9;  /* Soft hover gray */
+  /* Inverted Slate Scale (Light Mode sees 100 as dark text) */
+  --slate-50:  #020617;
+  --slate-100: #0f172a;
+  --slate-200: #1e293b;
+  --slate-300: #334155;
+  --slate-400: #475569;
+  --slate-500: #64748b;
+  --slate-600: #94a3b8;
+  --slate-700: #cbd5e1;
+  --slate-800: #e2e8f0;
+  --slate-900: #f1f5f9;
+  --slate-950: #f8fafc;
 
-  /* — Borders (Subtle gray) — */
+  --theme-white: #000000;
+  --theme-black: #ffffff;
+
+  --color-base:     #F8FAFC;
+  --color-surface:  #FFFFFF;
+  --color-elevated: #FFFFFF;
+  --color-overlay:  #F1F5F9;
+
   --border-subtle:  rgba(0, 0, 0, 0.06);
   --border-default: rgba(0, 0, 0, 0.1);
   --border-strong:  rgba(0, 0, 0, 0.15);
 
-  /* — Accent (Vibrant Sky Blue) — */
-  --accent:        #0ea5e9;
+  --accent:        #0ea5e9; /* Sky Blue */
   --accent-hover:  #0284c7;
-  --accent-muted:  rgba(14, 165, 233, 0.12);
+  --accent-muted:  rgba(14, 165, 233, 0.2);
   --accent-border: rgba(14, 165, 233, 0.22);
   --accent-strong: rgba(14, 165, 233, 0.32);
 
-  /* — Text (Dark Charcoal) — */
   --text-primary:   #1e293b;
   --text-secondary: #334155;
   --text-muted:     #64748b;
 
-  /* — Semantic — */
   --color-success: #10b981;
   --color-warning: #f59e0b;
   --color-danger:  #ef4444;
   --color-info:    #3b82f6;
 
-  /* — Shadows — */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+
+  --hero-glow-1: rgba(14,165,233,0.15);
+  --hero-glow-2: rgba(16,185,129,0.06);
+  --text-gradient-1: #0284c7;
+  --text-gradient-2: #0ea5e9;
+  --text-gradient-3: #10b981;
+}
+
+.dark { /* DARK MODE */
+  color-scheme: dark;
+
+  /* Normal Slate Scale */
+  --slate-50:  #f8fafc;
+  --slate-100: #f1f5f9;
+  --slate-200: #e2e8f0;
+  --slate-300: #cbd5e1;
+  --slate-400: #94a3b8;
+  --slate-500: #64748b;
+  --slate-600: #475569;
+  --slate-700: #334155;
+  --slate-800: #1e293b;
+  --slate-900: #0f172a;
+  --slate-950: #020617;
+
+  --theme-white: #ffffff;
+  --theme-black: #000000;
+
+  --color-base:     #141010;
+  --color-surface:  #1E1818;
+  --color-elevated: #282020;
+  --color-overlay:  #352929;
+
+  --border-subtle:  rgba(251, 113, 133, 0.08);
+  --border-default: rgba(251, 113, 133, 0.13);
+  --border-strong:  rgba(251, 113, 133, 0.22);
+
+  --accent:        #fb7185; /* Rose / Pastel Red */
+  --accent-hover:  #f43f5e;
+  --accent-muted:  rgba(251, 113, 133, 0.12);
+  --accent-border: rgba(251, 113, 133, 0.22);
+  --accent-strong: rgba(251, 113, 133, 0.32);
+
+  --text-primary:   #fff1f2;
+  --text-secondary: #fecdd3;
+  --text-muted:     #fda4af;
+
+  --color-success: #2dd4bf;
+  --color-warning: #fbbf24;
+  --color-danger:  #ef4444;
+  --color-info:    #38bdf8;
+
+  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.55);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.6);
+
+  --hero-glow-1: rgba(251,113,133,0.14);
+  --hero-glow-2: rgba(45,212,191,0.06);
+  --text-gradient-1: #fff1f2;
+  --text-gradient-2: #fb7185;
+  --text-gradient-3: #2dd4bf;
 }
 
 /* ================================================================
@@ -57,49 +128,51 @@ body {
 }
 
 /* ================================================================
-   GLASSMORPHISM — clean light frosted glass
+   GLASSMORPHISM
    ================================================================ */
 .glass-header {
-  background: rgba(255, 255, 255, 0.85);
+  background: var(--color-surface);
   backdrop-filter: blur(12px) saturate(1.4);
   -webkit-backdrop-filter: blur(12px) saturate(1.4);
   border-bottom: 1px solid var(--border-subtle);
 }
+.dark .glass-header {
+  background: rgba(30, 24, 24, 0.92);
+}
 
 .glass-panel {
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--color-surface);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border-subtle);
 }
+.dark .glass-panel {
+  background: rgba(30, 24, 24, 0.95);
+}
 
-.glass-panel-glow { background: var(--color-surface); box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+.glass-panel-glow { background: var(--color-surface); box-shadow: var(--shadow-sm); }
 .glass-card       { background: var(--color-elevated); border: 1px solid var(--border-subtle); transition: all 0.2s ease; }
-.glass-card:hover { border-color: var(--border-strong); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+.glass-card:hover { border-color: var(--border-strong); box-shadow: var(--shadow-md); }
 
 /* ================================================================
-   SCROLLBAR — subtle gray
+   SCROLLBAR
    ================================================================ */
 ::-webkit-scrollbar        { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track  { background: transparent; }
-::-webkit-scrollbar-thumb  { background: rgba(0,0,0,0.15); border-radius: 9999px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.25); }
+::-webkit-scrollbar-thumb  { background: var(--border-strong); border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent-strong); }
 
 /* ================================================================
-   FOCUS RING
+   FOCUS RING & SELECTION
    ================================================================ */
 *:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
   border-radius: 6px;
 }
-
-/* ================================================================
-   SELECTION
-   ================================================================ */
 ::selection {
-  background: rgba(14, 165, 233, 0.25);
-  color: #0f172a;
+  background: var(--accent-muted);
+  color: var(--text-primary);
 }
 
 /* ================================================================
@@ -112,13 +185,4 @@ body {
     transition-duration:       0.01ms !important;
     scroll-behavior:           auto !important;
   }
-}
-
-/* ================================================================
-   PRINT
-   ================================================================ */
-@media print {
-  body { background: #ffffff !important; color: #000000 !important; }
-  .no-print         { display: none !important; }
-  .print-page-break { page-break-after: always; }
 }
